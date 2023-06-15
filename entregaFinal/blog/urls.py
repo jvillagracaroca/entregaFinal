@@ -1,9 +1,10 @@
-from django.urls import path
-from . import views
-from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.urls import path
+
+from . import views
 
 urlpatterns = [
     path('', views.home, name="Home"),
@@ -19,6 +20,8 @@ urlpatterns = [
     path('filtrarPublicaciones/', views.filtrarPublicaciones, name="filtraPublicaciones"),
     path('perfil/', views.perfil, name='perfil'),
     path('actualizarPerfil/', views.actualizarPerfil, name='actualizarPerfil'),
+    path('publicacion/<int:publicacion_id>/eliminar/', views.eliminar_publicacion, name='eliminarPublicacion'),
+
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

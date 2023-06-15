@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractUser, User
 from django.db import models
 
 
-
 class Usuario(AbstractUser):
     image_profile = models.ImageField(upload_to='profile_images', blank=True, null=True)
     

@@ -17,7 +17,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Perfil usuario</h4>
                 </div>
-                <form method="post" action="{% url 'actualizarPerfil' %}" enctype="multipart/form-data">
+                <form id="perfil-form" action="{% url 'actualizarPerfil' %}" method="POST">
                     {% csrf_token %}
                     <div class="row mt-2">
                         <div class="col-md-6">
@@ -28,13 +28,13 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label class="labels">Correo electrónico</label>
-                            <input type="email" class="form-control" name="email" name="email" value="{{ user.email }}">
+                            <input type="email" class="form-control" name="email" value="{{ user.email }}">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label class="labels">Cambiar contraseña</label>
-                            <input type="password" class="form-control" name="password1"  name="password1">
+                            <input type="password" class="form-control" name="password1">
                         </div>
                     </div>
                     <div class="mt-5 text-center">

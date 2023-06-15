@@ -11,7 +11,7 @@
     <h2>Temas publicados</h2>
     <form method="GET" action="{% url 'filtraPublicaciones' %}">
         <div class="card mb-3">
-        <input type="text" name="q" placeholder="Buscar por título, cuerpo o autor">
+            <input type="text" name="q" placeholder="Buscar por título, cuerpo o autor">
         </div>
         <button type="submit" class="btn btn-primary">Buscar</button>
         <button type="submit" class="btn btn-danger">Limpiar</button>
@@ -24,9 +24,19 @@
             <p>Autor: {{ publicacion.autor.username }}</p>
             <small>{{ publicacion.fecha }}</small>           
         </div>
+        <div class="card-body">  
+            {% if publicacion.imagen_portada %}
+                <img src="{{ publicacion.imagen_portada.url }}" alt="Imagen de portada">
+            {% endif %}   
+           
+        </div>
         <div class="card-body">     
             <a href="{% url 'detallePublicacionPK' publicacion.id %}" class="btn btn-primary">Ver detalles</a>
+            {% if publicacion.autor == request.user %}
+            <a href="{% url 'eliminarPublicacion' publicacion.id %}" class="btn btn-danger">Eliminar</a>
+            {% endif %}
         </div>
+        
     </div>
     {% endfor %}
 </div>

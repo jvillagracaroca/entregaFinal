@@ -48,7 +48,7 @@ def login_view(request):
             login(request, user)
             next_url = request.GET.get('next')
             if next_url:
-                return redirect(next_url)
+                return redirect(next_url) 
             else:
                 return redirect('Home')
         else:
@@ -171,4 +171,14 @@ def actualizarPerfil(request):
 
         messages.success(request, 'Los cambios del perfil han sido guardados exitosamente.')
 
-    return redirect(request.path)
+    return redirect('perfil')
+
+def eliminar_publicacion(request, publicacion_id):
+    publicacion = Publicacion.objects.get(id=publicacion_id)
+    if request.user == publicacion.autor:
+        publicacion.delete()
+        messages.success(request, 'Publicación eliminada.')
+    else:
+        messages.error(request, 'No tienes permiso para eliminar esta publicación.')
+    
+    return redirect(request.META.get('HTTP_REFERER', 'Home'))
