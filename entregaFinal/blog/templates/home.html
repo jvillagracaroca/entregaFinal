@@ -1,0 +1,44 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block content %}
+<div class="d-flex justify-content-center mt-5 p-4 bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center text-primary mb-4">Bienvenidos al blog!</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            {% if user.is_authenticated %}
+            <div class="col-3">
+                <div class="text-center">
+                    <a href="{% url 'crearPublicacion' %}"> <button type="button" class="btn btn-primary">Crear pubicación</button></a>
+                </div>
+            </div>
+            {% endif %}
+            <div class="col-3">
+                <div class="text-center">
+                    <a href="{% url 'verPublicaciones' %}"><button type="button" class="btn btn-danger">Ver lista de foro</button></a>
+                </div>
+            </div>
+            {% if user.is_authenticated %}
+           
+            {% else %}
+            <div class="col-3">
+                <div class="text-center">
+                    <a href="{% url 'registrarUsuario' %}" ><button type="button" class="btn btn-dark">Crear usuario</button></a>
+                </div>
+            </div>
+            {% endif %}
+            
+        </div>
+        <div class="row">
+            <div class="col-12">
+                
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+{% endblock content %} 

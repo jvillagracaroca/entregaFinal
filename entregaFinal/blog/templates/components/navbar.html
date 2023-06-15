@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary bg-info" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand text-light" href="{% url 'Home' %}">Blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="ms-auto">
+                {% if user.is_authenticated %}
+                    <span class="navbar-text me-2">¡Bienvenido, {{ user.username }}!</span>
+                   
+                    <a href="{% url 'perfil' %}"><button type="button" class="btn btn-success">Mi perfil</button></a>
+                    <a href="{% url 'logout' %}"><button type="button" class="btn btn-danger">Cerrar sesión</button></a>
+                {% else %}
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Iniciar sesión</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %} 
+
+{% block content %}
+<div class="container">
+    <div class="row mt-2">
+        <a class="btn btn-link" href="{% url 'Home' %}"><button class="btn btn-danger">volver</button></a>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center mt-2 p-4 bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center text-primary mb-4">Registrar usuario</h1>
+                <div class="modal-body">
+                <form id="register-form" action="{% url 'registrarUsuario' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="mb-3">
+                      <label for="username" class="form-label">Username</label>
+                      <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                      </div>
+                    <div class="mb-3">
+                      <label for="password" class="form-label">contraseña</label>
+                      <input type="password" class="form-control" id="password1" name="password1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password2" class="form-label">Confirmar contraseña</label>
+                        <input type="password" class="form-control" id="password2" name="password2">
+                    </div>
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-4">
+                            <input type="submit" value="Crear usuario" class="btn btn-success w-100">
+                        </div>
+                    </div>
+                  </form>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if form.non_field_errors %}
+    <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% block scripts %}
+<script>
+
+    
+    $(document).ready(function() {
+        $('#register-form').submit(function(event) {
+            // Evitar que el formulario se envíe normalmente
+            event.preventDefault();
+
+            // Realizar la petición AJAX al servidor
+            $.ajax({
+                url: $(this).attr('action'),
+                type: $(this).attr('method'),
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    // Mostrar el modal de éxito
+                    $('#successModal').modal('show');
+
+                    // Redirigir al inicio después de unos segundos
+                    setTimeout(function() {
+                        window.location.href = "{% url 'Home' %}";  // Redireccionar al inicio
+                    }, 2000);  // Esperar 2 segundos (2000 ms) antes de redireccionar
+                },
+                error: function(error) {
+                    // Mostrar el mensaje de error
+                    $('#error-message').text('Las contraseñas no coinciden');
+                    $('#error-message').show();
+                }
+            });
+        });
+    });
+</script>
+{% endblock scripts %}
+
+{% endblock content %}

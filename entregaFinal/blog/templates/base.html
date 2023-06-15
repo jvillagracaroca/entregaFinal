@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3ra pre-entrega</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <script src="https://kit.fontawesome.com/2ce8b68672.js" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          var currentUrl = window.location.href;
+          var loginForm = document.getElementById('login-form');
+          loginForm.action = "{% url 'login' %}?next=" + encodeURIComponent(currentUrl);
+      });
+  </script>
+  
+</head>
+
+<body class="bg-base">
+    {% include 'components/navbar.html' %}
+    
+    <div class="container">
+        <div class="row">
+          <div class="col-1">
+          </div>
+          <div class="col-10">
+            {% block content %}
+    
+            {% endblock content %} 
+            {% if request.GET.login_error %}
+            <div class="alert alert-danger">{{ request.GET.login_error }}</div>
+            {% endif %}
+          </div>
+          <div class="col-1">
+          </div>
+        </div>
+    </div>
+    
+
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Ingrese sus credenciales</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="login-form" action="{% url 'login' %}" method="POST">
+              {% csrf_token %}
+              <div class="mb-3">
+                  <label for="username">Nombre de usuario</label>
+                  <input type="text" id="username" name="username" class="form-control">
+              </div>
+              <div class="mb-3">
+                  <label for="password">Contraseña</label>
+                  <input type="password" id="password" name="password" class="form-control">
+              </div>
+              <input type="hidden" name="next" value="{{ request.GET.next }}">
+              <div class="mb-3">              
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+              </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    {% include 'components/footer.html' %}
+</body>
+</html>

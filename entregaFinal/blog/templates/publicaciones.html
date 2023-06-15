@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-2">
+        <a class="btn btn-link" href="{% url 'Home' %}"><button class="btn btn-danger">volver</button></a>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Temas publicados</h2>
+    <form method="GET" action="{% url 'filtraPublicaciones' %}">
+        <div class="card mb-3">
+        <input type="text" name="q" placeholder="Buscar por título, cuerpo o autor">
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+        <button type="submit" class="btn btn-danger">Limpiar</button>
+    </form>
+    <hr>
+    {% for publicacion in publicaciones %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <h4>{{ publicacion.titulo }}</h4>
+            <p>Autor: {{ publicacion.autor.username }}</p>
+            <small>{{ publicacion.fecha }}</small>           
+        </div>
+        <div class="card-body">     
+            <a href="{% url 'detallePublicacionPK' publicacion.id %}" class="btn btn-primary">Ver detalles</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

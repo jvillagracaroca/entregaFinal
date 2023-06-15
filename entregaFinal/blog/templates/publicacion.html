@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Crear nueva publicación</h1>
+    <form method="post" action="{% url 'crearPublicacion' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="titulo">Título</label>
+            <input type="text" name="titulo" id="titulo" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="cuerpo">Cuerpo</label>
+            <textarea name="cuerpo" id="cuerpo" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="id_imagen_portada">Imagen de portada</label>
+            <input type="file" name="imagen_portada" id="id_imagen_portada">
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Publicar</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
