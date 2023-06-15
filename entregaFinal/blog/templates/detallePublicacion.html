@@ -18,7 +18,7 @@
                         <p class="chat-date">{{ comentario.fecha }}</p>
                         <p class="chat-content">{{ comentario.contenido }}</p>
                         {% if comentario.autor == request.user %}
-                            <form method="post" action="{% url 'eliminarComentario' comentario.pk %}">
+                            <form method="POST" action="{% url 'blog:eliminarComentario' comentario.pk %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="next2" value="{{ request.get_full_path }}">
                                 <button type="submit" class="btn btn-link" >
@@ -38,14 +38,14 @@
 
     {% if user.is_authenticated %}
         <h5>Agregar comentario</h5>
-        <form method="POST" action="{% url 'agregarComentario' publicacion.id %}">
+        <form method="POST" action="{% url 'blog:agregarComentario' publicacion.id %}">
             {% csrf_token %}
             <div class="mb-3">
                <textarea name="contenido" rows="4" cols="50"></textarea>
             </div>
             <div class="mb-3">
                 <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                <button type="button" class="btn btn-primary">Enviar comentario</button>
+                <button type="submit" class="btn btn-primary">Enviar comentario</button>
             <div class="mb-3">
         </form>
     {% else %}

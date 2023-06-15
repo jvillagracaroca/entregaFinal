@@ -12,13 +12,13 @@
             {% if user.is_authenticated %}
             <div class="col-3">
                 <div class="text-center">
-                    <a href="{% url 'crearPublicacion' %}"> <button type="button" class="btn btn-primary">Crear pubicación</button></a>
+                    <a href="{% url 'blog:crearPublicacion' %}"> <button type="button" class="btn btn-primary">Crear pubicación</button></a>
                 </div>
             </div>
             {% endif %}
             <div class="col-3">
                 <div class="text-center">
-                    <a href="{% url 'verPublicaciones' %}"><button type="button" class="btn btn-danger">Ver lista de foro</button></a>
+                    <a href="{% url 'blog:verPublicaciones' %}"><button type="button" class="btn btn-danger">Ver lista de foro</button></a>
                 </div>
             </div>
             {% if user.is_authenticated %}
@@ -26,7 +26,7 @@
             {% else %}
             <div class="col-3">
                 <div class="text-center">
-                    <a href="{% url 'registrarUsuario' %}" ><button type="button" class="btn btn-dark">Crear usuario</button></a>
+                    <a href="{% url 'blog:registrarUsuario' %}" ><button type="button" class="btn btn-dark">Crear usuario</button></a>
                 </div>
             </div>
             {% endif %}

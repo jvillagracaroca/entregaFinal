@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container">
     <div class="row mt-2">
-        <a class="btn btn-link" href="{% url 'Home' %}"><button class="btn btn-danger">volver</button></a>
+        <a class="btn btn-link" href="{% url 'blog:Home' %}"><button class="btn btn-danger">volver</button></a>
     </div>
 </div>
 
@@ -14,7 +14,7 @@
             <div class="col-12">
                 <h1 class="text-center text-primary mb-4">Registrar usuario</h1>
                 <div class="modal-body">
-                <form id="register-form" action="{% url 'registrarUsuario' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <form id="register-form" action="{% url 'blog:registrarUsuario' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
                     <div class="mb-3">
                       <label for="username" class="form-label">Username</label>
                       <input type="text" class="form-control" id="username" name="username">
@@ -73,7 +73,7 @@
 
                     // Redirigir al inicio después de unos segundos
                     setTimeout(function() {
-                        window.location.href = "{% url 'Home' %}";  // Redireccionar al inicio
+                        window.location.href = "{% url 'blog:Home' %}";  // Redireccionar al inicio
                     }, 2000);  // Esperar 2 segundos (2000 ms) antes de redireccionar
                 },
                 error: function(error) {

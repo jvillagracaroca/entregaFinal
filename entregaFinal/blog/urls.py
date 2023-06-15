@@ -6,6 +6,8 @@ from django.urls import path
 
 from . import views
 
+app_name='blog'
+
 urlpatterns = [
     path('', views.home, name="Home"),
     path('registrar/', views.registrar, name='registrarUsuario'),
@@ -21,6 +23,7 @@ urlpatterns = [
     path('perfil/', views.perfil, name='perfil'),
     path('actualizarPerfil/', views.actualizarPerfil, name='actualizarPerfil'),
     path('publicacion/<int:publicacion_id>/eliminar/', views.eliminar_publicacion, name='eliminarPublicacion'),
+    path('about/', views.about ,name='about'),
 
 
 

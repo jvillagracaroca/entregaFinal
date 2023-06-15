@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import Publicacion, Usuario
 from django.db import models
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
  
 class RegistrarForm(forms.ModelForm):
     username = forms.CharField(label='Username')
@@ -29,7 +29,7 @@ class PublicacionForm(forms.ModelForm):
         model = Publicacion
         fields = ['titulo', 'cuerpo', 'imagen_portada']
 
-class PerfilUsuarioForm(UserChangeForm):
+class PerfilUsuarioForm(forms.ModelForm):
     class Meta:
-        model = Usuario
-        fields = ('username', 'email', 'image_profile')
+        model = User
+        fields = ('username', 'email', 'password')

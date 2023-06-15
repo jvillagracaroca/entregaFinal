@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <h1>Crear nueva publicación</h1>
-    <form method="post" action="{% url 'crearPublicacion' %}" enctype="multipart/form-data">
+    <form method="post" action="{% url 'blog:crearPublicacion' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-3">
             <label for="titulo">Título</label>

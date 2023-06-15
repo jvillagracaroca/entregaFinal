@@ -8,8 +8,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from .forms import PerfilUsuarioForm, PublicacionForm, RegistrarForm
-from .models import Comentario, Publicacion
+from .models import Comentario, Publicacion, Usuario
 
+app_name='blog'
 
 def home(request):
     login_error = request.COOKIES.get('login_error')
@@ -28,15 +29,13 @@ def registrar(request):
             user.password = make_password(form.cleaned_data['password1'])
             user.save()
             messages.success(request, 'Usuario creado correctamente.')
-            return redirect('Home')  # Redireccionar a la página de inicio
+            return redirect('blog:Home')  # Redireccionar a la página de inicio
         else:
             # Agregar mensaje de error al campo de confirmación de contraseña
             form.add_error('password2', 'Las contraseñas no coinciden')
     else:
         form = RegistrarForm()
     return render(request, 'registrar.html', {'form': form})
-
-
 
 
 def login_view(request):
@@ -52,14 +51,14 @@ def login_view(request):
             else:
                 return redirect('Home')
         else:
-            return HttpResponseRedirect(reverse('Home') + '?login_error=Credenciales inválidas. Inténtalo de nuevo.')
+            return HttpResponseRedirect(reverse('blog:Home') + '?login_error=Credenciales inválidas. Inténtalo de nuevo.')
 
     return JsonResponse({'success': False, 'message': 'Acceso no permitido.'})
 
 
 def logout_view(request):
     logout(request)
-    return redirect('Home')  # Redireccionar al inicio
+    return redirect('blog:Home')  
 
 @login_required
 def crearPublicacion(request):
@@ -71,7 +70,7 @@ def crearPublicacion(request):
             imagen_portada = form.cleaned_data['imagen_portada']
             publicacion = Publicacion(titulo=titulo, cuerpo=cuerpo, autor=request.user, imagen_portada=imagen_portada)
             publicacion.save()
-            return redirect('Home')
+            return redirect('blog:verPublicaciones')
     else:
         form = PublicacionForm(initial={'csrfmiddlewaretoken': get_token(request)})
     
@@ -149,7 +148,7 @@ def perfil(request):
         form = PerfilUsuarioForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('perfil')  # Redireccionar al perfil después de guardar los cambios
+            return redirect('perfil')  
     else:
         form = PerfilUsuarioForm(instance=user)
 
@@ -168,11 +167,14 @@ def actualizarPerfil(request):
         if password:
             user.set_password(password)
         user.save()
+        messages.success(request, 'Datos actualizados')
+        
+    else:
+        messages.error(request, 'Datos no actualizados')
+    
+    return render(request, 'perfil.html')
 
-        messages.success(request, 'Los cambios del perfil han sido guardados exitosamente.')
-
-    return redirect('perfil')
-
+@login_required
 def eliminar_publicacion(request, publicacion_id):
     publicacion = Publicacion.objects.get(id=publicacion_id)
     if request.user == publicacion.autor:
@@ -182,3 +184,6 @@ def eliminar_publicacion(request, publicacion_id):
         messages.error(request, 'No tienes permiso para eliminar esta publicación.')
     
     return redirect(request.META.get('HTTP_REFERER', 'Home'))
+
+def about(request):
+    return render(request, 'about.html')

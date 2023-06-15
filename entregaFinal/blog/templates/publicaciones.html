@@ -3,13 +3,13 @@
 {% block content %}
 <div class="container">
     <div class="row mt-2">
-        <a class="btn btn-link" href="{% url 'Home' %}"><button class="btn btn-danger">volver</button></a>
+        <a class="btn btn-link" href="{% url 'blog:Home' %}"><button class="btn btn-danger">volver</button></a>
     </div>
 </div>
 
 <div class="container">
     <h2>Temas publicados</h2>
-    <form method="GET" action="{% url 'filtraPublicaciones' %}">
+    <form method="GET" action="{% url 'blog:filtraPublicaciones' %}">
         <div class="card mb-3">
             <input type="text" name="q" placeholder="Buscar por título, cuerpo o autor">
         </div>
@@ -19,25 +19,31 @@
     <hr>
     {% for publicacion in publicaciones %}
     <div class="card mb-3">
-        <div class="card-header">
-            <h4>{{ publicacion.titulo }}</h4>
-            <p>Autor: {{ publicacion.autor.username }}</p>
-            <small>{{ publicacion.fecha }}</small>           
-        </div>
-        <div class="card-body">  
-            {% if publicacion.imagen_portada %}
-                <img src="{{ publicacion.imagen_portada.url }}" alt="Imagen de portada">
-            {% endif %}   
-           
-        </div>
-        <div class="card-body">     
-            <a href="{% url 'detallePublicacionPK' publicacion.id %}" class="btn btn-primary">Ver detalles</a>
-            {% if publicacion.autor == request.user %}
-            <a href="{% url 'eliminarPublicacion' publicacion.id %}" class="btn btn-danger">Eliminar</a>
+        <div class="row g-0">
+          <div class="col-md-4">
+             {% if publicacion.imagen_portada %}
+                <img src="{{ publicacion.imagen_portada.url }}" class="img-fluid rounded-start" height="180px"
+                width="180px" alt="Imagen de portada">
             {% endif %}
+          </div>
+          <div class="col-md-4">
+            <div class="card-body">
+              <h5 class="card-title">{{ publicacion.titulo }}</h5>
+              <h5 class="card-title">Autor </h5><h6 class="card-subtitle mb-2 text-muted">{{ publicacion.autor.username }}</h6>
+              <p class="card-text"><small class="text-muted">{{ publicacion.fecha }}</small></p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card-body">     
+                <a href="{% url 'blog:detallePublicacionPK' publicacion.id %}" class="btn btn-primary">Ver detalles</a>
+                {% if publicacion.autor == request.user %}
+                <a href="{% url 'blog:eliminarPublicacion' publicacion.id %}" class="btn btn-danger">Eliminar</a>
+                {% endif %}
+            </div>  
+          </div>
         </div>
-        
     </div>
     {% endfor %}
+    
 </div>
 {% endblock content %}
